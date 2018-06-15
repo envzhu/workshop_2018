@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>TensorFlow.js</title>
+
+
+  <script type="text/javascript" src="mnist2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.8.0"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("do").addEventListener("click",function(){
+        mnist2_main();
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <h1>CNN image recognition system</h1>
+  <button id="do">Sart Leraning</button><br><br>
+   
+   Select number 0 image file for training <input id="TrainFile_0" type="file" webkitdirectory><br>
+   Select number 1 image file for training <input id="TrainFile_1" type="file" webkitdirectory><br>
+   Select number 0 image file for testing  &nbsp;<input id="TestFile_0" type="file" webkitdirectory><br>
+   Select number 1 image file for testing  &nbsp;<input id="TestFile_1" type="file" webkitdirectory><br>
+
+   <div id="Status_log"></div>  
+   <div id="image_log"></div>
+   <div id="console_log"></div>
+</body>
+
+<br>
+<a href="./index.html">Back</a>
+
+</html>
