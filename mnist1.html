@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>TensorFlow.js</title>
+
+
+  <script type="text/javascript" src="mnist1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.8.0"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("do").addEventListener("click",function(){
+        mnist1_main();
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <h1>単純パーセプトロンを用いた画像認識</h1>
+  <p>訓練用・テスト用画像データ：<a href="https://drive.google.com/open?id=14skpfa-rdjS0eD78FPURH_ymyeB3HXsa</p>">ここ</a></p>
+  <button id="do">訓練開始</button><br><br>
+   
+   訓練用「0」の画像ファイルを選択してください <input id="TrainFile_0" type="file" multiple><br>
+   訓練用「1」の画像ファイルを選択してください <input id="TrainFile_1" type="file" multiple><br>
+   テスト用「0」の画像ファイルを選択してください <input id="TestFile_0" type="file" multiple><br>
+   テスト用「1」の画像ファイルを選択してください <input id="TestFile_1" type="file" multiple><br>
+  
+   <div id="status_log"></div>  
+   <div id="image_log"></div>
+   <div id="console_log"></div>
+</body>
+
+<br>
+<a href="./index.html">Back</a>
+
+</html>
