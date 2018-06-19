@@ -2,7 +2,7 @@ const X_SIZE = 28;
 const Y_SIZE = 28;
 
 const STEP_NUM = 150;
-const MAX_TRAIN_NUM = 1000;
+const MAX_TRAIN_NUM = 300;
 const BATCH_SIZE = 8;
 const EPOCHS = 1;
 const REF_VAL = 0.8
@@ -76,6 +76,9 @@ let statusHTML = function(status) {
 
 async function mnist1_main(){
     console.log("==========PROG2 START==========");
+      // ライブラリのロード
+    // name:visualization(可視化),version:バージョン(1),packages:パッケージ(corechart)
+   // google.load('visualization', '1', {'packages':['corechart']});   
 
     clearHTML();
     statusHTML("処理中");
@@ -124,7 +127,11 @@ async function mnist1_main(){
     delete tmp_y;
     delete train_data;
 
-
+    let train_acc_log = new Array(STEP_NUM+1);
+    for(let y = 0; y < STEP_NUM+1; y++) {
+      train_acc_log[y] = new Array(3)
+    }
+    train_acc_log[0] = ["Epoch_num", "Train_loss", "Test_accuracy"];
     
     console.log("========== Load Test Data");
     test_data[0] = await load_data(test_files_0);
@@ -147,6 +154,9 @@ async function mnist1_main(){
       const history = await model.fit(
         train_x, train_y,
         { batchSize: BATCH_SIZE, epochs: EPOCHS });
+        train_acc_log[i][0] = i;
+        train_acc_log[i][1] = history.history.loss[0];
+        train_acc_log[i][2] = test_accuracy(model, test_data);
 
       if((i%5 == 0)||(i == 1)){
         console.log("Loss after Epoch " + i + " : " + history.history.loss[0]);
@@ -157,6 +167,28 @@ async function mnist1_main(){
     console.log("========== Test Accuracy");
     
     putHTML("Final test accuracy : " + test_accuracy(model, test_data, true) + "%");
+    
+    console.log(train_acc_log)
+    // グラフの描画   
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {      
+      
+      // 配列からデータの生成
+      var data = google.visualization.arrayToDataTable(train_acc_log);
+    
+      // オプションの設定
+      var options = {
+        title: '訓練データに対する正答率の推移'
+       };     
+               
+      // 指定されたIDの要素に折れ線グラフを作成
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        
+      // グラフの描画
+      chart.draw(data, options);
+    }
+
     statusHTML("処理終了");
 
     console.log("==============END==============");

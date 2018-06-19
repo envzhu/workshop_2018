@@ -86,7 +86,7 @@ let statusHTML = function(status) {
 
 async function mnist2_main(){
     console.log("==========mnist2 START==========");
-
+   
     train_files_0 = document.getElementById('TrainFile_0').files;
     train_files_1 = document.getElementById('TrainFile_1').files;
     test_files_0 = document.getElementById('TestFile_0').files;
@@ -133,7 +133,11 @@ async function mnist2_main(){
     delete tmp_y;
     delete train_data;
 
-
+    let train_acc_log = new Array(STEP_NUM+1);
+    for(let y = 0; y < STEP_NUM+1; y++) {
+      train_acc_log[y] = new Array(3)
+    }
+    train_acc_log[0] = ["Epoch_num", "Train_loss", "Test_accuracy"];
     
     console.log("========== Load Test Data");
     test_data[0] = await load_data(test_files_0);
@@ -186,7 +190,10 @@ async function mnist2_main(){
       const history = await model.fit(
         train_x, train_y,
         { batchSize: BATCH_SIZE, epochs: EPOCHS });
-        statusHTML("学習中 "+i+ "エポック目");
+
+        train_acc_log[i][0] = i;
+        train_acc_log[i][1] = history.history.loss[0];
+        train_acc_log[i][2] = test_accuracy(model, test_data);
 
       if((i%5 == 0)||(i == 1)){
 
@@ -203,6 +210,27 @@ async function mnist2_main(){
     
     putHTML("Final test accuracy : " + test_accuracy(model, test_data, true) + "%");
     
+    console.log(train_acc_log)
+    // グラフの描画   
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {      
+      
+      // 配列からデータの生成
+      var data = google.visualization.arrayToDataTable(train_acc_log);
+    
+      // オプションの設定
+      var options = {
+        title: '訓練データに対する正答率の推移'
+       };     
+               
+      // 指定されたIDの要素に折れ線グラフを作成
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        
+      // グラフの描画
+      chart.draw(data, options);
+    }
+
     statusHTML("処理終了");
     console.log("==============END==============");
 }
@@ -231,4 +259,5 @@ function test_accuracy(model, data, display=false){
     }
   return correct/(data[0].length+data[1].length)*100
 }
+
 

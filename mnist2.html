@@ -16,11 +16,14 @@
       })
     });
   </script>
+  
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 
 <body>
   <h1>CNN（畳み込みニューラルネットワーク）を用いた画像認識</h1>
-  <p>訓練用・テスト用画像データ：<a href="https://drive.google.com/open?id=14skpfa-rdjS0eD78FPURH_ymyeB3HXsa</p>">ここ</a>
+  <p>訓練用・テスト用画像データ：<a href="https://drive.google.com/open?id=14skpfa-rdjS0eD78FPURH_ymyeB3HXsa</p>">ここ</a></p>
   <button id="do">訓練開始</button><br><br>
    
    訓練用「0」の画像ファイルを選択してください <input id="TrainFile_0" type="file" multiple><br>
@@ -28,9 +31,11 @@
    テスト用「0」の画像ファイルを選択してください <input id="TestFile_0" type="file" multiple><br>
    テスト用「1」の画像ファイルを選択してください <input id="TestFile_1" type="file" multiple><br>
 
-   <div id="Status_log"></div>  
-   <div id="image_log"></div>
-   <div id="console_log"></div>
+  <div id="Status_log"></div>  
+  <div id="image_log"></div>
+  <div id="console_log"></div>
+  <!--  グラフの描画エリア -->
+  <div id="chart_div" style="width: 100%; height: 1000px"></div>
 </body>
 
 <br>
