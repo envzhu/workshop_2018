@@ -1,8 +1,8 @@
 const X_SIZE = 28;
 const Y_SIZE = 28;
 
-const STEP_NUM = 20;
-const MAX_TRAIN_NUM = 1000;
+var STEP_NUM = 20;
+var MAX_TRAIN_NUM = 1000;
 const BATCH_SIZE = 8;
 const EPOCHS = 1;
 const REF_VAL = 0.8;
@@ -62,7 +62,7 @@ async function load_data(files){
   if(files.length>MAX_TRAIN_NUM)
     data = new Array(MAX_TRAIN_NUM);
   else 
-    data = new Array(files.leng);
+    data = new Array(files.length);
 
   for(let i=0; (i < files.length)&&(i<MAX_TRAIN_NUM); i++){
     console.log(files[i].name);
@@ -86,7 +86,10 @@ let statusHTML = function(status) {
 
 async function mnist2_main(){
     console.log("==========mnist2 START==========");
-   
+
+    STEP_NUM = document.form.learn_num.value;
+    MAX_TRAIN_NUM = document.form.file_num.value;
+
     train_files_0 = document.getElementById('TrainFile_0').files;
     train_files_1 = document.getElementById('TrainFile_1').files;
     test_files_0 = document.getElementById('TestFile_0').files;
@@ -111,9 +114,16 @@ async function mnist2_main(){
      * 過学習を防ぐため、0と1を学習する順番は、
      * ランダムでなければならない
      */
-    let tmp_x = new Array(train_data[0].length + train_data[1].length);
-    let tmp_y = new Array(train_data[0].length + train_data[1].length);
-    for(let i=0; i < train_data[0].length + train_data[1].length; i++){
+    let file_len;
+    if(train_data[0].length > train_data[1].length)
+      file_len = train_data[1].length;
+    else
+      file_len = train_data[0].length;
+    let tmp_x = new Array(file_len*2);
+    let tmp_y = new Array(file_len*2);
+
+
+    for(let i=0; i < file_len*2; i++){
       if(i%2 == 0){
         tmp_x[i] = train_data[0][i/2];
         tmp_y[i] = [1, 0];

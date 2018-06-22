@@ -30,7 +30,10 @@
    訓練用「1」の画像ファイルを選択してください <input id="TrainFile_1" type="file" multiple><br>
    テスト用「0」の画像ファイルを選択してください <input id="TestFile_0" type="file" multiple><br>
    テスト用「1」の画像ファイルを選択してください <input id="TestFile_1" type="file" multiple><br>
-
+   <form name="form">
+      <input type="number" name="learn_num" maxlength="20" step="1" placeholder="学習回数">
+      <input type="number" name="file_num" maxlength="20" step="1" placeholder="1要素当たりの訓練用画像ファイルの枚数">
+    </form>
   <div id="Status_log"></div>  
   <div id="image_log"></div>
   <div id="console_log"></div>
