@@ -71,6 +71,16 @@ async function load_data(files){
   return data;
 }
 
+async function load_test_data(files){
+  let data = new Array(files.length);
+
+  for(let i=0; i < files.length; i++){
+    console.log(files[i].name);
+    data[i] = await load_data_1(files[i])
+  }
+  return data;
+}
+
 let clearHTML = function () {
   document.getElementById('console_log').innerHTML = "";
 }
@@ -150,9 +160,9 @@ async function mnist2_main(){
     train_acc_log[0] = ["Epoch_num", "Train_loss", "Test_accuracy"];
     
     console.log("========== Load Test Data");
-    test_data[0] = await load_data(test_files_0);
+    test_data[0] = await load_test_data(test_files_0);
     console.log(test_data[0]);
-    test_data[1] = await load_data(test_files_1);
+    test_data[1] = await load_test_data(test_files_1);
     console.log(test_data[1]);
 
 
