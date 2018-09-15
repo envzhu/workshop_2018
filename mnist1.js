@@ -5,7 +5,7 @@ const STEP_NUM = 150;
 const MAX_TRAIN_NUM = 300;
 const BATCH_SIZE = 8;
 const EPOCHS = 1;
-const REF_VAL = 0.8
+const REF_VAL = 0.8;
 
 var train_files_0;
 var train_files_1;
@@ -79,7 +79,9 @@ async function mnist1_main(){
       // ライブラリのロード
     // name:visualization(可視化),version:バージョン(1),packages:パッケージ(corechart)
    // google.load('visualization', '1', {'packages':['corechart']});   
-
+   STEP_NUM = document.form.learn_num.value;
+   MAX_TRAIN_NUM = document.form.file_num.value;
+   
     clearHTML();
     statusHTML("処理中");
     
